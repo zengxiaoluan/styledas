@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { styles } from "../src/index.js";
+import { styles } from "../src/index";
 
 let str = `.u{
     color: black;
