@@ -1,13 +1,24 @@
+interface Node {
+  selector: string;
+  content: string;
+  subs: Node[];
+}
+
+class Node implements Node {
+  selector: string = "";
+  content: string = "";
+  subs: Node[] = [];
+
+  constructor() {}
+}
+
 export function parser(str) {
-  let root = {
-    selector: "",
-    subs: [],
-    content: [],
-  };
+  let root = new Node();
+
   let cur = root;
   let selector = "";
-  let stack = [];
-  let content = [];
+  let stack: Node[] = [];
+  let content = "";
   let isContent = false;
   let isSelector = true;
   let keepSpace = false;
@@ -72,9 +83,7 @@ export function parser(str) {
         selector += c;
         break;
       case "&": {
-        let newRoot = {
-          subs: [],
-        };
+        let newRoot = new Node();
         cur.subs.push(newRoot);
         cur.content = content;
 
@@ -114,5 +123,5 @@ export function stringify(node, pre) {
 
 export function styles(str) {
   let root = parser(str);
-  return root, stringify(root, "");
+  return stringify(root, "");
 }

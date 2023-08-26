@@ -9,9 +9,12 @@
   "dependencies": {
     "vitest": "^0.34.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "vite": "^4.4.9"
+  },
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "dev": "vite"
   },
   "repository": {
     "type": "git",
