@@ -5,8 +5,6 @@ let str = `.user{
     background-size: 1px 1px;
 }`;
 
-interface a {}
-
 document.getElementById("pre")!.textContent = str;
 
 console.time("time");
