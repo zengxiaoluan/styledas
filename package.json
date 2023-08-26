@@ -1,0 +1,27 @@
+{
+  "name": "styles",
+  "version": "1.0.0",
+  "description": "A simple css preprocessor",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "vitest": "^0.34.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zengxiaoluan/styles.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zengxiaoluan/styles/issues"
+  },
+  "homepage": "https://github.com/zengxiaoluan/styles#readme"
+}
