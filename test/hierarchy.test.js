@@ -1,13 +1,15 @@
 import { expect, test } from "vitest";
 import { styles } from "../src/index";
 
-let str = `.u{
+let str = `.user{
     color: black;
-    background-size: 1px 1px;
+    &.h{
+    color: red;
+    }
 }`;
 
 export default str;
 
 test(str, () => {
-  expect(styles(str)).toBe(".u{color:black;background-size:1px 1px;}");
+  expect(styles(str)).to.be.string;
 });

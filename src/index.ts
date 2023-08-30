@@ -16,46 +16,63 @@ export function parser(str) {
   let root = new Node();
 
   let cur = root;
-  let selector = "";
+  let characters = "";
   let stack: Node[] = [];
-  let content = "";
   let isContent = false;
   let isSelector = true;
-  let keepSpace = false;
 
-  for (let c of str) {
+  let position = 0; // 当前字符串位置指针
+  let previous = "";
+  let c = "";
+
+  function next() {
+    return str[position++];
+  }
+
+  function prev() {
+    return str[--position];
+  }
+
+  function peek() {
+    return str[position];
+  }
+
+  function whitespace(prev: string) {
+    while (true) {
+      let c = peek();
+      if ([" ", "\n", "\t"].includes(c)) next();
+      else break;
+    }
+
+    if ([":", "\n", "\t"].includes(prev)) return "";
+    else return " ";
+  }
+
+  let scanning = true;
+  while (scanning) {
+    previous = c;
+    c = next();
+    if (c === void 0) break;
+
     switch (c) {
       case "{": {
-        cur.selector = selector;
+        cur.selector = characters;
         stack.push(cur);
 
-        selector = "";
+        characters = "";
         isContent = true;
-        content = "";
+        isSelector = false;
         break;
       }
-      case ":": {
-        if (isContent) {
-          content += c;
-          keepSpace = true;
-        } else if (isSelector) {
-          selector += c;
-        }
-        break;
-      }
+
       case ";": {
-        if (isContent) {
-          content += c;
-          keepSpace = false;
-        } else if (isSelector) {
-          selector += c;
-        }
+        characters += c;
         break;
       }
       case "}": {
-        cur.content = content;
+        cur.content = characters;
 
-        content = "";
+        characters = "";
         isContent = true;
 
         stack.pop();
@@ -64,43 +81,38 @@ export function parser(str) {
         if (_) {
           cur = _;
 
-          content = cur.content;
+          characters = cur.content;
         }
         break;
       }
-      case "\n":
-        break;
-      case "\t":
-        break;
-      case " ": {
-        if (isContent && keepSpace) {
-          content += c;
-        }
-        break;
-      }
+
       case ".":
         isSelector = true;
-        selector += c;
+        characters += c;
         break;
       case "&": {
         let newRoot = new Node();
         cur.subs.push(newRoot);
-        cur.content = content;
+        cur.content = characters;
 
         cur = newRoot;
-        selector = "";
-        content = "";
+        characters = "";
         isContent = false;
         isSelector = true;
         break;
       }
 
+      case "\n":
+        break;
+      case "\t":
+        break;
+      case " ": {
+        if (isSelector) break;
+        c = whitespace(previous);
+      }
+
       default: {
-        if (isContent) {
-          content += c;
-        } else if (isSelector) {
-          selector += c;
-        }
+        characters += c;
         break;
       }
     }

@@ -2,7 +2,9 @@ import { parser, stringify } from "./src/index";
 
 let str = `.user{
     color: black;
-    background-size: 1px 1px;
+    .h{
+    color: red;
+    }
 }`;
 
 document.getElementById("pre")!.textContent = str;
