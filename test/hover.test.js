@@ -11,5 +11,5 @@ let str = `.u{
 export default str;
 
 test(str, () => {
-  expect(styles(str)).toBe(".u{color: black;}.u:hover{color: red;}");
+  expect(styles(str)).toBe(".u{color:black;}.u:hover{color:red;}");
 });
