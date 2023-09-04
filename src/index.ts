@@ -1,24 +1,24 @@
 interface Node {
   selector: string;
-  content: string;
+  content: string[];
   subs: Node[];
+  parent: Node | null;
 }
 
 class Node implements Node {
   selector: string = "";
-  content: string = "";
+  content: string[] = [];
   subs: Node[] = [];
+  parent: Node | null = null;
 
   constructor() {}
 }
 
 export function parser(str) {
-  let root = new Node();
-
-  let cur = root;
+  let root: Node = 0 as any;
+  let cur: Node = 0 as any;
   let characters = "";
   let stack: Node[] = [];
-  let isContent = false;
   let isSelector = true;
 
   let position = 0; // 当前字符串位置指针
@@ -56,32 +56,41 @@ export function parser(str) {
 
     switch (c) {
       case "{": {
-        cur.selector = characters;
+        if (!root) {
+          root = new Node();
+          cur = root;
+        } else {
+          let newRoot = new Node();
+          newRoot.parent = cur;
+          cur.subs.push(newRoot);
+          cur = newRoot;
+
+          if (cur.parent && characters.startsWith(".")) characters = " " + characters;
+        }
+        cur.selector = characters.replace("&", "");
         stack.push(cur);
 
         characters = "";
-        isContent = true;
         isSelector = false;
         break;
       }
 
       case ";": {
         characters += c;
+        cur.content.push(characters);
+        characters = "";
         break;
       }
       case "}": {
-        cur.content = characters;
+        cur.content.push(characters);
 
         characters = "";
-        isContent = true;
 
         stack.pop();
 
         let _ = stack[stack.length - 1];
         if (_) {
           cur = _;
-
-          characters = cur.content;
         }
         break;
       }
@@ -91,13 +100,7 @@ export function parser(str) {
         characters += c;
         break;
       case "&": {
-        let newRoot = new Node();
-        cur.subs.push(newRoot);
-        cur.content = characters;
-
-        cur = newRoot;
-        characters = "";
-        isContent = false;
+        characters = c;
         isSelector = true;
         break;
       }
@@ -121,11 +124,11 @@ export function parser(str) {
   return root;
 }
 
-export function stringify(node, pre) {
+export function stringify(node: Node, pre) {
   let css = "";
   if (!node) return css;
 
-  css += pre + node.selector + "{" + node.content + "}";
+  css += pre + node.selector + "{" + node.content.join("") + "}";
   for (const sub of node.subs) {
     css += stringify(sub, pre + node.selector);
   }
