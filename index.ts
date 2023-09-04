@@ -1,9 +1,20 @@
 import { parser, stringify } from "./src/index";
-
+/*
 let str = `.user{
     color: black;
     .h{
     color: red;
+    }
+}`;
+*/
+
+let str = `.u{
+    o: k;
+    &.h{
+    r: r;
+    }
+    .a{
+    c: r;
     }
 }`;
 

@@ -3,7 +3,7 @@ import { styles } from "../src/index";
 
 let str = `.user{
     color: black;
-    &.h{
+    .h{
     color: red;
     }
 }`;
@@ -11,5 +11,5 @@ let str = `.user{
 export default str;
 
 test(str, () => {
-  expect(styles(str)).to.be.string;
+  expect(styles(str)).toBe(".user{color:black;}.user .h{color:red;}");
 });
