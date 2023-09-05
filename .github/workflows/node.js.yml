@@ -13,4 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - run: echo 'We are getting started!'
+    - name: Checkout
+      uses: actions/checkout@master
     - run: npm run test
