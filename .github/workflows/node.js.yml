@@ -15,5 +15,6 @@ jobs:
     steps:
     - run: echo 'We are getting started!'
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@main
+    - run: npm i
     - run: npm run test
