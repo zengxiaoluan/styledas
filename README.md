@@ -18,3 +18,7 @@ so will have enough performance to support runtime requirements. That is all.
 # Which feature support util now?
 
 You can check it under the test directory. It is still developing.
+
+# Credits
+
+This repo was highly inspired by `styled-components` and `stylis` which are both awesome web tools.
