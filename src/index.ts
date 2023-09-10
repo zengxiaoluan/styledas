@@ -15,8 +15,8 @@ class Node implements Node {
 }
 
 export function parser(str) {
-  let root: Node = 0 as any;
-  let cur: Node = 0 as any;
+  let dummy: Node = new Node();
+  let cur: Node = dummy;
   let characters = "";
   let stack: Node[] = [];
   let isSelector = true;
@@ -48,6 +48,16 @@ export function parser(str) {
     else return " ";
   }
 
+  function comment() {
+    while (true) {
+      let c = peek();
+      if (["\n"].includes(c)) break;
+      else next();
+    }
+
+    return "";
+  }
+
   let scanning = true;
   while (scanning) {
     previous = c;
@@ -56,17 +66,14 @@ export function parser(str) {
 
     switch (c) {
       case "{": {
-        if (!root) {
-          root = new Node();
-          cur = root;
-        } else {
-          let newRoot = new Node();
-          newRoot.parent = cur;
-          cur.subs.push(newRoot);
-          cur = newRoot;
+        let node = new Node();
+        cur.subs.push(node);
+        node.parent = cur;
 
-          if (cur.parent && characters.startsWith(".")) characters = " " + characters;
-        }
+        cur = node;
+
+        if (cur.parent && cur.parent !== dummy && characters.startsWith(".")) characters = " " + characters;
+
         cur.selector = characters.replace("&", "");
         stack.push(cur);
 
@@ -105,6 +112,10 @@ export function parser(str) {
         break;
       }
 
+      case "/":
+        if (peek() === "/") comment();
+        break;
+
       case "\n":
         break;
       case "\t":
@@ -121,16 +132,16 @@ export function parser(str) {
     }
   }
 
-  return root;
+  return dummy.subs[0];
 }
 
-export function stringify(node: Node, pre) {
+export function stringify(node: Node, preSelector: string) {
   let css = "";
   if (!node) return css;
 
-  css += pre + node.selector + "{" + node.content.join("") + "}";
+  css += preSelector + node.selector + "{" + node.content.join("") + "}";
   for (const sub of node.subs) {
-    css += stringify(sub, pre + node.selector);
+    css += stringify(sub, preSelector + node.selector);
   }
 
   return css;

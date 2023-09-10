@@ -1,4 +1,7 @@
-import { parser, stringify } from "./src/index";
+import { parser, stringify, styles } from "./src/index";
+
+export default styles;
+
 /*
 let str = `.user{
     color: black;

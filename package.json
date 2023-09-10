@@ -14,7 +14,8 @@
   },
   "scripts": {
     "test": "vitest",
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
