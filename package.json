@@ -1,7 +1,7 @@
 {
   "name": "styles",
   "version": "1.0.0",
-  "description": "A simple css preprocessor",
+  "description": "A feature limited css preprocessor",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -10,10 +10,13 @@
     "vitest": "^0.34.3"
   },
   "devDependencies": {
+    "prettier": "^3.0.3",
     "vite": "^4.4.9"
   },
   "scripts": {
     "test": "vitest",
+    "prettier:c": "npx prettier -c .",
+    "prettier:w": "npx prettier -w .",
     "dev": "vite",
     "build": "vite build"
   },
@@ -27,5 +30,25 @@
   "bugs": {
     "url": "https://github.com/zengxiaoluan/styles/issues"
   },
-  "homepage": "https://github.com/zengxiaoluan/styles#readme"
+  "homepage": "https://github.com/zengxiaoluan/styles#readme",
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "semi": true,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "quoteProps": "as-needed",
+    "trailingComma": "all",
+    "singleAttributePerLine": false,
+    "htmlWhitespaceSensitivity": "css",
+    "vueIndentScriptAndStyle": false,
+    "proseWrap": "preserve",
+    "insertPragma": false,
+    "printWidth": 80,
+    "requirePragma": false,
+    "tabWidth": 2,
+    "useTabs": false,
+    "embeddedLanguageFormatting": "auto"
+  }
 }

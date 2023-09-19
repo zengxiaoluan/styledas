@@ -6,7 +6,7 @@ interface Node {
 }
 
 class Node implements Node {
-  selector: string = "";
+  selector: string = '';
   content: string[] = [];
   subs: Node[] = [];
   parent: Node | null = null;
@@ -17,13 +17,13 @@ class Node implements Node {
 export function parser(str) {
   let dummy: Node = new Node();
   let cur: Node = dummy;
-  let characters = "";
+  let characters = '';
   let stack: Node[] = [];
   let isSelector = true;
 
   let position = 0; // 当前字符串位置指针
-  let previous = "";
-  let c = "";
+  let previous = '';
+  let c = '';
 
   function next() {
     return str[position++];
@@ -40,22 +40,29 @@ export function parser(str) {
   function whitespace(prev: string) {
     while (true) {
       let c = peek();
-      if ([" ", "\n", "\t"].includes(c)) next();
+      if ([' ', '\n', '\t'].includes(c)) next();
       else break;
     }
 
-    if ([":", "\n", "\t"].includes(prev)) return "";
-    else return " ";
+    if ([':', '\n', '\t'].includes(prev)) return '';
+    else return ' ';
   }
 
-  function comment() {
+  function comment(commentType: '/' | '*') {
+    console.log(commentType, '---');
     while (true) {
-      let c = peek();
-      if (["\n"].includes(c)) break;
-      else next();
+      previous = c;
+      c = next();
+      if (c === void 0) break;
+
+      if (commentType === '/' && ['\n'].includes(c)) {
+        break;
+      } else if (commentType === '*' && previous === '*' && ['/'].includes(c)) {
+        break;
+      }
     }
 
-    return "";
+    return '';
   }
 
   let scanning = true;
@@ -65,33 +72,34 @@ export function parser(str) {
     if (c === void 0) break;
 
     switch (c) {
-      case "{": {
+      case '{': {
         let node = new Node();
         cur.subs.push(node);
         node.parent = cur;
 
         cur = node;
 
-        if (cur.parent && cur.parent !== dummy && characters.startsWith(".")) characters = " " + characters;
+        if (cur.parent && cur.parent !== dummy && characters.startsWith('.'))
+          characters = ' ' + characters;
 
-        cur.selector = characters.replace("&", "");
+        cur.selector = characters.replace('&', '');
         stack.push(cur);
 
-        characters = "";
+        characters = '';
         isSelector = false;
         break;
       }
 
-      case ";": {
+      case ';': {
         characters += c;
         cur.content.push(characters);
-        characters = "";
+        characters = '';
         break;
       }
-      case "}": {
+      case '}': {
         cur.content.push(characters);
 
-        characters = "";
+        characters = '';
 
         stack.pop();
 
@@ -102,25 +110,27 @@ export function parser(str) {
         break;
       }
 
-      case ".":
+      case '.':
         isSelector = true;
         characters += c;
         break;
-      case "&": {
+      case '&': {
         characters = c;
         isSelector = true;
         break;
       }
 
-      case "/":
-        if (peek() === "/") comment();
+      case '/': {
+        let c = peek();
+        if (['/', '*'].includes(c)) comment(c);
         break;
+      }
 
-      case "\n":
+      case '\n':
         break;
-      case "\t":
+      case '\t':
         break;
-      case " ": {
+      case ' ': {
         if (isSelector) break;
         c = whitespace(previous);
       }
@@ -136,10 +146,10 @@ export function parser(str) {
 }
 
 export function stringify(node: Node, preSelector: string) {
-  let css = "";
+  let css = '';
   if (!node) return css;
 
-  css += preSelector + node.selector + "{" + node.content.join("") + "}";
+  css += preSelector + node.selector + '{' + node.content.join('') + '}';
   for (const sub of node.subs) {
     css += stringify(sub, preSelector + node.selector);
   }
@@ -149,5 +159,5 @@ export function stringify(node: Node, preSelector: string) {
 
 export function styles(str) {
   let root = parser(str);
-  return stringify(root, "");
+  return stringify(root, '');
 }
