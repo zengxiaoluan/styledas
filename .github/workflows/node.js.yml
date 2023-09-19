@@ -5,16 +5,17 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: echo 'We are getting started!'
-    - name: Checkout
-      uses: actions/checkout@main
-    - run: npm i
-    - run: npm run test
+      - run: echo 'We are getting started!'
+      - name: Checkout
+        uses: actions/checkout@main
+      - run: npm i
+      - run: npm run prettier:c
+      - run: npm run test

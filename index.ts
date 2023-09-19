@@ -1,4 +1,4 @@
-import { parser, stringify, styles } from "./src/index";
+import { parser, stringify, styles } from './src/index';
 
 export default styles;
 
@@ -12,21 +12,20 @@ let str = `.user{
 */
 
 let str = `.u{
-    o: k;
-    &.h{
-    r: r;
-    }
-    .a{
-    c: r;
-    }
+    /*
+    color: black; // b
+    	&:hover {
+        color: red;
+        // c
+    }*/
 }`;
 
-document.getElementById("pre")!.textContent = str;
+document.getElementById('pre')!.textContent = str;
 
-console.time("time");
+console.time('time');
 let root = parser(str);
 console.log(root);
-console.log(stringify(root, ""));
-console.timeEnd("time");
+console.log(stringify(root, ''));
+console.timeEnd('time');
 
 // https://www.youtube.com/watch?v=jGwO_UgTS7I
