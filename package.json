@@ -1,36 +1,36 @@
 {
-  "name": "styles",
-  "version": "1.0.0",
+  "name": "styledas",
+  "version": "1.0.5",
   "description": "A feature limited css preprocessor",
-  "main": "index.js",
+  "main": "./dist/styledas.js",
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "vitest": "^0.34.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "prettier": "^3.0.3",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
   },
   "scripts": {
     "test": "vitest",
     "prettier:c": "npx prettier -c .",
     "prettier:w": "npx prettier -w .",
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "pub": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zengxiaoluan/styles.git"
+    "url": "git+https://github.com/zengxiaoluan/styledas.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zengxiaoluan/styles/issues"
+    "url": "https://github.com/zengxiaoluan/styledas/issues"
   },
-  "homepage": "https://github.com/zengxiaoluan/styles#readme",
+  "homepage": "https://github.com/zengxiaoluan/styledas#readme",
   "prettier": {
     "arrowParens": "always",
     "bracketSameLine": false,

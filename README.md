@@ -15,6 +15,21 @@ I want a css preprocessor which have some feature limited css, like:
 
 so will have enough performance to support runtime requirements. That is all.
 
+# Usage
+
+```node
+let { styledas } = require('styledas');
+
+let str = `.u{
+    color: black;
+    	&:hover {
+        color: red;
+    }
+}`;
+
+console.log(styledas(str)); // .u{color:black;}.u:hover{color:red;}
+```
+
 # Which feature support util now?
 
 You can check it under the test directory. It is still developing.

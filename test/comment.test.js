@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { styles } from '../src/index';
+import { styledas } from '../src/index';
 
 let str = `.u{
     // a
@@ -19,10 +19,43 @@ let str2 = `.u{
     }*/
 }`;
 
+let str3 = `.a{
+        // line comment
+        // color: red;
+        /**
+         * removes block comments and line comments,
+         * there's a fire in the house // there is
+         */
+        button /*
+          // what's
+          xxx
+          */
+        {color: blue;}
+        // hello
+        button /* 1 */
+        {
+          color: red; /* 2 */
+        }
+        /*! 1 */
+        color: red;
+        /*! 2 */
+        h1 {
+          /*! 1 */
+          color: red;
+          /*! 2 */
+          color: red;
+          /*! 3 */
+        }}
+      `;
+
 export default str;
 
 test(str, () => {
-  expect(styles(str)).toBe('.u{color:black;}.u:hover{color:red;}');
+  expect(styledas(str)).toBe('.u{color:black;}.u:hover{color:red;}');
 
-  expect(styles(str2)).toBe('.u{}');
+  expect(styledas(str2)).toBe('.u{}');
+
+  expect(styledas(str3)).toBe(
+    '.a{color:red;}.a button{color:blue;}.a button{color:red;}.a h1{color:red;color:red;}',
+  );
 });

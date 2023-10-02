@@ -49,15 +49,14 @@ export function parser(str) {
   }
 
   function comment(commentType: '/' | '*') {
-    console.log(commentType, '---');
     while (true) {
       previous = c;
       c = next();
       if (c === void 0) break;
 
-      if (commentType === '/' && ['\n'].includes(c)) {
+      if (commentType === '/' && '\n' === c) {
         break;
-      } else if (commentType === '*' && previous === '*' && ['/'].includes(c)) {
+      } else if (commentType === '*' && previous === '*' && '/' === c) {
         break;
       }
     }
@@ -79,10 +78,12 @@ export function parser(str) {
 
         cur = node;
 
-        if (cur.parent && cur.parent !== dummy && characters.startsWith('.'))
+        if (characters.startsWith('&')) {
+          // like &:hover, don't append whiteSpace
+        } else if (cur.parent && cur.parent !== dummy)
           characters = ' ' + characters;
 
-        cur.selector = characters.replace('&', '');
+        cur.selector = characters.replace('&', '').trimEnd();
         stack.push(cur);
 
         characters = '';
@@ -97,7 +98,7 @@ export function parser(str) {
         break;
       }
       case '}': {
-        cur.content.push(characters);
+        cur.content.push(characters.trimEnd());
 
         characters = '';
 
@@ -157,7 +158,7 @@ export function stringify(node: Node, preSelector: string) {
   return css;
 }
 
-export function styles(str) {
+export function styledas(str) {
   let root = parser(str);
   return stringify(root, '');
 }
