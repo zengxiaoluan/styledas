@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "styledas": "^1.0.0"
+    "styledas": "^1.0.1"
   }
 }
