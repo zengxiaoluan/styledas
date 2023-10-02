@@ -18,7 +18,8 @@
     "prettier:c": "npx prettier -c .",
     "prettier:w": "npx prettier -w .",
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "pub": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
