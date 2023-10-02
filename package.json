@@ -6,8 +6,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "prettier": "^3.0.3",
     "vite": "^4.4.9",
