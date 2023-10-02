@@ -1,6 +1,6 @@
-import { parser, stringify, styles } from './src/index';
+import { parser, stringify, styledas } from './src/index';
 
-export default styles;
+export default styledas;
 
 /*
 let str = `.user{

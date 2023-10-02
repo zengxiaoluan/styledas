@@ -9,7 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "styledas": "^1.0.1"
+  "dependencies": {},
+  "devDependencies": {
+    "styledas": "^1.0.3",
+    "stylis": "^4.3.0"
   }
 }

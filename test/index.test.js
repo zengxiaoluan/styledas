@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { styles } from '../src/index';
+import { styledas } from '../src/index';
 
 let str = `.u{
     color: black;
@@ -9,5 +9,5 @@ let str = `.u{
 export default str;
 
 test(str, () => {
-  expect(styles(str)).toBe('.u{color:black;background-size:1px 1px;}');
+  expect(styledas(str)).toBe('.u{color:black;background-size:1px 1px;}');
 });
